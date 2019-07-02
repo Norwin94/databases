@@ -1,0 +1,1 @@
+Celem projektu jest utworzenie bazy danych mającej symulować rozgrywki ligowe klubów piłkarskich.

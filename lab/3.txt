@@ -1,0 +1,44 @@
+--3.9.2. Nazw dzia³ów (department_name), nazwisk (last_name) oraz p³ac (salary) pracowników, 
+--którzy zarabiaj¹ ponad 12000, wykorzystuj¹c klauzulê JOIN (tabele employees oraz departments -> 8 rows, 3 columns)
+select department_name, last_name, salary 
+from employees
+join departments 
+using (department_id)
+where salary > 12000;
+
+--3.9.4. Nazwisk pracowników (last_name), nazw dzia³ów (department_name) i miast (city), w których pracuj¹, 
+--wykorzystuj¹c klauzulê JOIN (tabele employees, departments oraz locations -> 106 rows, 3 columns)
+select last_name, department_name, city
+from employees
+join departments
+using (department_id)
+join locations 
+using (location_id);
+
+--3.10.2. Nazw dzia³ów (department_name), które zatrudniaj¹ ponad 5 pracowników wraz z iloœciami pracowników, 
+--którzy w nich pracuj¹, wykorzystuj¹c klauzulê NATURAL JOIN (HAVING, tabele departments oraz employees -> 2 rows, 2 columns)
+SELECT department_name, count(employee_id)
+from departments
+natural join employees
+group by department_name
+having count(employee_id) > 5;
+
+--3.10.4. Nazwisk pracowników (last_name) oraz ich wyp³at (salary) wyra¿one w procentach wartoœci œrodkowej p³acy ustalonej 
+--dla danego stanowiska, zaokr¹glone do wartoœci ca³kowitych. Posortuj wyniki malej¹co po wartoœciach procentowych. 
+--(kolumny min_salary oraz max_salary w tabeli jobs to minimalne oraz maksymalne p³ace ustalone dla ka¿dego stanowiska) 
+--(ROUND, tabele employees oraz jobs -> 107 rows, 2 columns)
+select last_name, round(salary*100/((min_salary+max_salary)/2)) as "wyplata w %"
+from employees 
+join jobs using (job_id)
+order by "wyplata w %" desc;
+
+--*3.9.6. Nazw pañstw (country_name) i iloœci pracowników, którzy w nich pracuj¹ (4 rows, 2 columns)
+select country_name, count(employee_id)
+from countries
+join locations
+using (country_id)
+join departments
+using (location_id)
+join employees
+using (department_id)
+group by country_name;

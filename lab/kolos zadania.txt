@@ -1,0 +1,114 @@
+1. 
+--napisz zapytanie ktore spowoduje wyswietlenie wszystkich pracownikow, ktorych nazwa 
+--stanowiska konczy sie na 'R_REP'
+
+select employee_id from employees where job_id like '%R_REP';
+
+****************************************************************************************
+
+2.
+--do tabeli locations dodaj kilka wierszy
+
+insert all
+into locations(location_id, street_address, postal_code, city, country_id)
+values (9998,'Castella','53456','Napoli','IT')
+into locations(location_id, street_address, postal_code, city, state_province, country_id)
+values (9997,'Norma','53-112','Wroclaw','Dolnoslaskie','US')
+into locations(location_id, street_address, postal_code, city, state_province, country_id)
+values (9996,'Borma','53-113','Wroclaw','Dolnoslaskie','CA')
+select * from dual;
+
+----------------------------------------------------------------------------------------
+
+--zmien miasto na WARSZAWA tym lokacjom, ktorych miasta znajduja sie na prowincjach
+
+UPDATE locations 
+SET CITY = 'WARSZAWA'
+WHERE STATE_PROVINCE IS NULL;
+
+----------------------------------------------------------------------------------------
+
+--usun lokacje, ktore nie znajduja sie na prowincjach
+
+
+****************************************************************************************
+
+
+1. Podaj listê wszystkich Pañstw, w których znajduje siê biura lub placówki dyplomatyczne
+
+brakuje mi tabeli, bo by³a na tablicy jeœli ktoœ potrafi miej wiêcej oceniæ co mo¿e 
+byæ w tej tabeli(jakie kolumny) i podaæ
+ rozwiazanie przyk³adowe by³ bym bardzo wdziêczny
+
+2. Do tabeli locations, dodaj kilka wierszy. Nastêpnie zmieñ miasto na WARSZAWE tym lokacjom, 
+których miasta 
+znajduj¹ sie w prowincjach.
+usuñ lokacje które nie znajduj¹ siê w prowincjach
+
+INSERT ALL
+INTO locations (locationid, STREETADDRESS, postalcode, city)
+VALUES (1234, 'Damrota', 12345, 'Wroclaw')
+INTO locations (locationid, STREETADDRESS, postalcode, city)
+VALUES (2345, 'Rynek', 23456, 'Warszawa')
+INTO locations (locationid, STREETADDRESS, postal_code, city)
+VALUES (3456, 'Kosciuszki', 34567, 'Warszawa')
+SELECT * FROM dual;
+
+UPDATE LOCATIONS
+SET city='Warszawa' 
+WHERE state_province IS NOT NULL;
+
+ALTER TABLE locations
+DROP CONSTRAINT nie wiem co tutaj;
+
+Nie wiem jak pozbyæ siê tych ograniczeñ, ani co to za ograniczenia przez co nie mogê usun¹æ wysakujê b³¹d
+Error report -
+SQL Error: ORA-02292: integrity constraint (PWR1516Z012200961.DEPTLOCFK) violated - child record found
+02292. 00000 - "integrity constraint (%s.%s) violated - child record found"
+*Cause: attempted to delete a parent key value that had a foreign
+dependency.
+*Action: delete dependencies first then parent or disable constraint.
+
+DELETE FROM locations
+WHERE state_province IS NULL;
+
+3.
+Oblicz dla ka¿dego biura podaj¹c identyfikator oraz miasto liczbe zatrudnionych pracowników oraz ich sumaryczn¹ pensjê i œredni¹ w biurze
+
+Tak jak w zadaniu pierwszym gdyby ktoœ pomóg³ by³ bym bardzo wdziêczny
+
+4.
+Wyœwietl pracowników (Imiê i Nazwisko) którzy zarabiaj¹ najwiêcej w poszczególnych dzia³ach, ³acznie z nazw¹ dzia³u i œredni¹ pasj¹ w ka¿dym dziale
+
+W ogóle nie ogaranim co tutaj ma byæ proszê kogoœ o rozwi¹zanie bardzo mi zale¿y na tym zadaniu z chêci¹ siê odwdziêczê za pomoc
+
+5.
+
+Stwórz tabelê:
+numer indeksu - klucz g³ówny, wratoœci numeryczne do 6 cyfr
+imiê - ci¹g znaków o d³ugoœæi do 16 znaków nie mo¿e byæ pusta 
+kod pocztowy -wartoœæ numeryczna o d³. 5 cyfr, nie mo¿e byæ pusta
+œrednia wydatków - wartoœæ numeryczna o d³ugoœæi 10 cyfr i dok³adnoœci do 2 miejsc po przecinku
+rabat -wartoœæ numeryczna o d³ugoœæi 2 cyfr i dok³adnoœæi do 1 miejsca po przecinku
+
+CREATE TABLE Klienci
+(
+Numerindeksu NUMBER(6,0) PRIMARY KEY,
+Imie VARCHAR(16) NOT NULL,
+Kodpocztowy NUMBER(5,0) NOT NULL,
+Srednia_wydatkow NUMBER(10,2),
+Rabat NUMBER(2,1)
+);
+
+Zmieñ w tabeli klienci kolumnê rabat ustalaj¹c wartoœæ domyœln¹ równo 3,0
+
+ALTER TABLE Klienci
+modify Rabat DEFAULT 3.0;
+
+Usun tabele klienci
+
+DROP TABLE Klienci;
+
+Bardzo mi zale¿y na 4 zadaniu jednak nie mam pojêcia jak je zrobiæ.
+Wrzucam diagram HR
+

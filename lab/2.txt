@@ -1,0 +1,26 @@
+--2.6.1 Nazwisk (last_name) oraz wyp³at (salary) pracowników, którzy zarabiaj¹ 90% wyp³aty lub mniej ni¿ pracownik o 
+--nazwisku Chen (tabela employees);
+SELECT last_name, salary 
+ FROM employees 
+ WHERE salary <= 0.9* (SELECT salary FROM employees where last_name = 'Chen'); 
+
+--2.6.2 Nazwisk (last_name), id dzia³ów (department_id) oraz wyp³at (salary) pracowników, którzy zarabiaj¹ wiêcej, 
+--ni¿ ka¿dy pracownik dzia³u 'Finance'( tabele employees,UWAGA: zakaz u¿ycia funkcji MAX(), MIN(), AVG() )
+SELECT last_name, department_id, salary 
+ FROM employees 
+ WHERE salary > ALL (SELECT salary 
+                    FROM employees 
+                    WHERE department_id = 
+                    (SELECT department_id from departments where department_name = 'Finance'));
+
+--2.6.3 Identyfikatory dzia³ów (department_id) , w których pracuje mniej pracowników, ni¿ w dziale 'Accounting' 
+--(tabele departments),  
+select department_id
+from employees 
+having 
+count(employee_id) < (select count(employee_id) 
+                      from employees 
+                      where department_id = (select department_id 
+                                             from departments 
+                                             where department_name = 'Accounting')) 
+                      group by department_id;

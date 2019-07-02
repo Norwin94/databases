@@ -1,0 +1,75 @@
+--1.1.1. Wszystkich nazwisk pracowników oraz ich wyp³at (SELECT, FROM - tabela employees)
+select last_name, salary 
+from employees;
+
+--2.1.2. Wszystkich nazw dzia³ów w kolumnie "nazwa dzialu" wraz z numerami identyfikacyjnymi ich kierowników w kolumnie 
+--"numer kierownika" (SELECT, FROM, alias - tabela departments)
+select department_name as "nazwa dzialu", manager_id as "numer kierownika" 
+from departments;
+
+--3.1.3. Nazwisk wszystkich pracowników, którzy nie zarabiaj¹ 24000  wraz z ich p³acami;
+select last_name, salary 
+from employees 
+where salary < 24000;
+
+--4.1.1. Nazwisk (last_name) oraz wyp³at (salary) pracowników przypisanych do kierownika o numerze (manager_id) 100, 
+--których wyp³aty wynosz¹ ponad 5000, (AND/OR);
+select last_name, salary 
+from employees 
+where manager_id = 100 and salary > 5000;
+
+--5.1.2.  Kodów stanowisk (job_id) bez powtarzania oraz numerów kierowników (manager_id) dla kierowników o numerach 100 lub 102
+--(DISTINCT, AND/OR );
+select distinct job_id, manager_id 
+from employees 
+where manager_id = 100 or manager_id = 102; 
+
+--6.1.3. Nazwisk (last_name), imiona(first_name ), wyp³at (salary) oraz kodów stanowisk (job_id) pracowników, 
+--których kod stanowiska nie koñczy siê na "_MAN", posortowaæ rosn¹co po imionach oraz po pensji w kolejnoœci od najwiêcej 
+--do najmniej zarabiaj¹cego pracownika-> u¿yj polskich nazw kolumn. (LIKE)
+select last_name as "Nazwisko", first_name as "Imie", salary as "Pensja", job_id as "kod" 
+from employees 
+where job_id not like '%man' 
+order by salary asc;
+
+--7.2.1. Nazwy departamentów, id departamentu, posortowanych rosn¹co po nazwach departamentów oraz malej¹co po id departamentu,
+--których ID jest mniejsze od 120. U¿yj polskich nazw kolumn.
+select department_name as "nazwa departamentu", department_id as "kod departamentu" 
+from departments 
+where department_id < 120
+order by department_name asc, department_id asc;
+
+--8.2.1 Ilu jest pracowników zatrudnionych na poszczególnych stanowiskach o ID nie rozpoczynaj¹cym siê od (AD_) oraz 
+--jaka jest ich sumaryczna pensja. 
+select sum(salary), count (*) 
+from employees 
+where job_id not like 'AD%';
+
+--9.3.1. Iloœci pracowników przypisanych do ka¿dego kodu stanowiska (job_id) wraz z odpowiadaj¹cymi kodami stanowisk, 
+--posortowanych malej¹co pod wzglêdem iloœci pracowników. (COUNT(), GROUP BY )
+SELECT COUNT(last_name), job_id 
+FROM employees 
+GROUP BY job_id 
+order by count(last_name) desc;
+
+--10.3.2. Numerów kierowników (manager_id) oraz œrednie wyp³at (salary) pracowników, którzy s¹ do nich przypisani. 
+--(AVG, GROUP BY)
+select avg(salary), manager_id 
+from employees 
+group by manager_id;
+
+--11.3.3. Wyœwietl kody stanowisk (job_id) oraz œrednie wyp³at (salary) pracowników, którzy s¹ do nich przypisani, 
+--posortowanych rosn¹co po œrednich wyp³atach. U¿yj polskich nazw kolumn. (AVG, GROUP BY)
+select avg(salary) as "srednia pensja", job_id as "kod" 
+from employees
+group by job_id 
+order by avg(salary) asc;
+
+--12.3.4. Kodów stanowisk (job_id), iloœci przypisanych do nich pracowników oraz najmniejszych, œrednich i najwiêkszych wyp³at
+--dla pracowników,którzy s¹ do nich przypisani oraz zarabiaj¹ poni¿ej 17000, posortowanych rosn¹co po najmniejszych wyp³atach.
+select count(last_name) as "ilosc", job_id as "kod", min(salary) as "minimalna", max(salary) as "maksymalna", 
+avg(salary) as "srednia" 
+from employees 
+where salary < 17000 
+group by job_id 
+order by min(salary);
