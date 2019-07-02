@@ -1,10 +1,10 @@
 # databases
 Project and Lab - Databases in Oracle SQL
 
-###note
+###note  
 notka - having jest łączone z group by, z group by nie uzywa sie where
 
-###note
+###note  
 notka - sprawdzenie daty:
 
 and  
