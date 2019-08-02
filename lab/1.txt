@@ -1,72 +1,72 @@
---1.1.1. Wszystkich nazwisk pracownikÛw oraz ich wyp≥at (SELECT, FROM - tabela employees)
+--1.1.1. Wszystkich nazwisk pracownik√≥w oraz ich wyp≈Çat (SELECT, FROM - tabela employees)
 select last_name, salary 
 from employees;
 
---2.1.2. Wszystkich nazw dzia≥Ûw w kolumnie "nazwa dzialu" wraz z numerami identyfikacyjnymi ich kierownikÛw w kolumnie 
+--2.1.2. Wszystkich nazw dzia≈Ç√≥w w kolumnie "nazwa dzialu" wraz z numerami identyfikacyjnymi ich kierownik√≥w w kolumnie 
 --"numer kierownika" (SELECT, FROM, alias - tabela departments)
 select department_name as "nazwa dzialu", manager_id as "numer kierownika" 
 from departments;
 
---3.1.3. Nazwisk wszystkich pracownikÛw, ktÛrzy nie zarabiajπ 24000  wraz z ich p≥acami;
+--3.1.3. Nazwisk wszystkich pracownik√≥w, kt√≥rzy nie zarabiajƒÖ 24000  wraz z ich p≈Çacami;
 select last_name, salary 
 from employees 
 where salary < 24000;
 
---4.1.1. Nazwisk (last_name) oraz wyp≥at (salary) pracownikÛw przypisanych do kierownika o numerze (manager_id) 100, 
---ktÛrych wyp≥aty wynoszπ ponad 5000, (AND/OR);
+--4.1.1. Nazwisk (last_name) oraz wyp≈Çat (salary) pracownik√≥w przypisanych do kierownika o numerze (manager_id) 100, 
+--kt√≥rych wyp≈Çaty wynoszƒÖ ponad 5000, (AND/OR);
 select last_name, salary 
 from employees 
 where manager_id = 100 and salary > 5000;
 
---5.1.2.  KodÛw stanowisk (job_id) bez powtarzania oraz numerÛw kierownikÛw (manager_id) dla kierownikÛw o numerach 100 lub 102
+--5.1.2.  Kod√≥w stanowisk (job_id) bez powtarzania oraz numer√≥w kierownik√≥w (manager_id) dla kierownik√≥w o numerach 100 lub 102
 --(DISTINCT, AND/OR );
 select distinct job_id, manager_id 
 from employees 
 where manager_id = 100 or manager_id = 102; 
 
---6.1.3. Nazwisk (last_name), imiona(first_name ), wyp≥at (salary) oraz kodÛw stanowisk (job_id) pracownikÛw, 
---ktÛrych kod stanowiska nie koÒczy siÍ na "_MAN", posortowaÊ rosnπco po imionach oraz po pensji w kolejnoúci od najwiÍcej 
---do najmniej zarabiajπcego pracownika-> uøyj polskich nazw kolumn. (LIKE)
+--6.1.3. Nazwisk (last_name), imiona(first_name ), wyp≈Çat (salary) oraz kod√≥w stanowisk (job_id) pracownik√≥w, 
+--kt√≥rych kod stanowiska nie ko≈Ñczy siƒô na "_MAN", posortowaƒá rosnƒÖco po imionach oraz po pensji w kolejno≈õci od najwiƒôcej 
+--do najmniej zarabiajƒÖcego pracownika-> u≈ºyj polskich nazw kolumn. (LIKE)
 select last_name as "Nazwisko", first_name as "Imie", salary as "Pensja", job_id as "kod" 
 from employees 
 where job_id not like '%man' 
-order by salary asc;
+order by first_name, salary desc;
 
---7.2.1. Nazwy departamentÛw, id departamentu, posortowanych rosnπco po nazwach departamentÛw oraz malejπco po id departamentu,
---ktÛrych ID jest mniejsze od 120. Uøyj polskich nazw kolumn.
+--7.2.1. Nazwy departament√≥w, id departamentu, posortowanych rosnƒÖco po nazwach departament√≥w oraz malejƒÖco po id departamentu,
+--kt√≥rych ID jest mniejsze od 120. U≈ºyj polskich nazw kolumn.
 select department_name as "nazwa departamentu", department_id as "kod departamentu" 
 from departments 
 where department_id < 120
 order by department_name asc, department_id asc;
 
---8.2.1 Ilu jest pracownikÛw zatrudnionych na poszczegÛlnych stanowiskach o ID nie rozpoczynajπcym siÍ od (AD_) oraz 
+--8.2.1 Ilu jest pracownik√≥w zatrudnionych na poszczeg√≥lnych stanowiskach o ID nie rozpoczynajƒÖcym siƒô od (AD_) oraz 
 --jaka jest ich sumaryczna pensja. 
 select sum(salary), count (*) 
 from employees 
 where job_id not like 'AD%';
 
---9.3.1. Iloúci pracownikÛw przypisanych do kaødego kodu stanowiska (job_id) wraz z odpowiadajπcymi kodami stanowisk, 
---posortowanych malejπco pod wzglÍdem iloúci pracownikÛw. (COUNT(), GROUP BY )
+--9.3.1. Ilo≈õci pracownik√≥w przypisanych do ka≈ºdego kodu stanowiska (job_id) wraz z odpowiadajƒÖcymi kodami stanowisk, 
+--posortowanych malejƒÖco pod wzglƒôdem ilo≈õci pracownik√≥w. (COUNT(), GROUP BY )
 SELECT COUNT(last_name), job_id 
 FROM employees 
 GROUP BY job_id 
 order by count(last_name) desc;
 
---10.3.2. NumerÛw kierownikÛw (manager_id) oraz úrednie wyp≥at (salary) pracownikÛw, ktÛrzy sπ do nich przypisani. 
+--10.3.2. Numer√≥w kierownik√≥w (manager_id) oraz ≈õrednie wyp≈Çat (salary) pracownik√≥w, kt√≥rzy sƒÖ do nich przypisani. 
 --(AVG, GROUP BY)
 select avg(salary), manager_id 
 from employees 
 group by manager_id;
 
---11.3.3. Wyúwietl kody stanowisk (job_id) oraz úrednie wyp≥at (salary) pracownikÛw, ktÛrzy sπ do nich przypisani, 
---posortowanych rosnπco po úrednich wyp≥atach. Uøyj polskich nazw kolumn. (AVG, GROUP BY)
+--11.3.3. Wy≈õwietl kody stanowisk (job_id) oraz ≈õrednie wyp≈Çat (salary) pracownik√≥w, kt√≥rzy sƒÖ do nich przypisani, 
+--posortowanych rosnƒÖco po ≈õrednich wyp≈Çatach. U≈ºyj polskich nazw kolumn. (AVG, GROUP BY)
 select avg(salary) as "srednia pensja", job_id as "kod" 
 from employees
 group by job_id 
 order by avg(salary) asc;
 
---12.3.4. KodÛw stanowisk (job_id), iloúci przypisanych do nich pracownikÛw oraz najmniejszych, úrednich i najwiÍkszych wyp≥at
---dla pracownikÛw,ktÛrzy sπ do nich przypisani oraz zarabiajπ poniøej 17000, posortowanych rosnπco po najmniejszych wyp≥atach.
+--12.3.4. Kod√≥w stanowisk (job_id), ilo≈õci przypisanych do nich pracownik√≥w oraz najmniejszych, ≈õrednich i najwiƒôkszych wyp≈Çat
+--dla pracownik√≥w,kt√≥rzy sƒÖ do nich przypisani oraz zarabiajƒÖ poni≈ºej 17000, posortowanych rosnƒÖco po najmniejszych wyp≈Çatach.
 select count(last_name) as "ilosc", job_id as "kod", min(salary) as "minimalna", max(salary) as "maksymalna", 
 avg(salary) as "srednia" 
 from employees 
